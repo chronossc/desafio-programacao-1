@@ -1,0 +1,58 @@
+{% extends "base/base.html" %}
+{% load bootstrap3 %}
+
+{% block content %}
+<!-- Main jumbotron for a primary marketing message or call to action -->
+<div class="jumbotron">
+  <div class="container">
+    <h2>Upload file</h2>
+    <form action="." method="post" accept-charset="utf-8" class="form" enctype="multipart/form-data">
+      {% csrf_token %}
+      {% bootstrap_form form %}
+      {% buttons %}
+        <button type="submit" class="btn btn-primary">
+          {% bootstrap_icon "upload" %} Submit
+        </button>
+      {% endbuttons %}
+    </form>
+  </div>
+</div>
+{% if objects %}
+<div class="container">
+  <!-- Example row of columns -->
+  <div class="row">
+    <div class="col-md-12">
+      <h2>Inserted objects</h2>
+      <table class="table">
+        <thead>
+          <tr>
+            <th>{{ obj_headers.purchaser_name }}</th>
+            <th>{{ obj_headers.item_description }}</th>
+            <th>{{ obj_headers.item_price }}</th>
+            <th>{{ obj_headers.purchase_count }}</th>
+            <th>{{ obj_headers.merchant_address }}</th>
+            <th>{{ obj_headers.merchant_name }}</th>
+          </tr>
+        </thead>
+        <tbody>
+          {% for obj in objects %}
+          <tr>
+            <th>{{ obj.purchaser_name }}</th>
+            <th>{{ obj.item_description }}</th>
+            <th>{{ obj.item_price }}</th>
+            <th>{{ obj.purchase_count }}</th>
+            <th>{{ obj.merchant_address }}</th>
+            <th>{{ obj.merchant_name }}</th>
+          </tr>
+          {% endfor %}
+        </tbody>
+      </table>
+    </div>
+  </div>
+  {% endif %}
+{% endblock content %}
+
+
+
+
+
