@@ -1,5 +1,5 @@
 {% extends "base/base.html" %}
-{% load bootstrap3 %}
+{% load bootstrap3 l10n i18n %}
 
 {% block content %}
 <!-- Main jumbotron for a primary marketing message or call to action -->
@@ -23,7 +23,7 @@
   <div class="row">
     <div class="col-md-12">
       <h2>Inserted objects</h2>
-      <table class="table">
+      <table class="table table-striped">
         <thead>
           <tr>
             <th>{{ obj_headers.purchaser_name }}</th>
@@ -37,15 +37,22 @@
         <tbody>
           {% for obj in objects %}
           <tr>
-            <th>{{ obj.purchaser_name }}</th>
-            <th>{{ obj.item_description }}</th>
-            <th>{{ obj.item_price }}</th>
-            <th>{{ obj.purchase_count }}</th>
-            <th>{{ obj.merchant_address }}</th>
-            <th>{{ obj.merchant_name }}</th>
+            <td>{{ obj.purchaser_name }}</td>
+            <td>{{ obj.item_description }}</td>
+            <td>{% localize on %}{{ obj.item_price }}{% endlocalize %}</td>
+            <td>{{ obj.purchase_count }}</td>
+            <td>{{ obj.merchant_address }}</td>
+            <td>{{ obj.merchant_name }}</td>
           </tr>
           {% endfor %}
         </tbody>
+        <tfoot>
+          <tr>
+            <th colspan="2" class="text-right">{% trans "Total revenue:" %}</th>
+            <th colspan="2">{% localize on %}{{ revenue }}{% endlocalize %}</th>
+            <th colspan="2"></th>
+          </tr>
+        </tfoot>
       </table>
     </div>
   </div>

@@ -61,10 +61,13 @@ class UploadView(FormView):
         context = super(UploadView, self).get_context_data(**context)
         if self.request.GET.get('ids'):
             # TODO: validate date
-            context['objects'] = \
-                Sale.objects.filter(
+            objects = Sale.objects.filter(
                     id__in=self.request.GET.get('ids').split(',')
                 )
+            context['objects'] = objects
             context['obj_headers'] = \
                 dict(([(f.name, f.verbose_name) for f in Sale._meta.fields]))
+            context['revenue'] = 0
+            for d in objects.values('item_price', 'purchase_count'):
+                context['revenue'] += d['item_price'] * d['purchase_count']
         return context
